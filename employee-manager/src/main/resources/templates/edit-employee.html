@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit employee | Employee Manager</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<main class="page-shell compact-shell">
+    <a class="back-link" th:href="@{/employees}">← Back to employee records</a>
+    <section class="card form-card">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">Employee #<span th:text="${employee.id}">1</span></p>
+                <h1>Edit employee</h1>
+            </div>
+            <p>Update the details, then save your changes.</p>
+        </div>
+
+        <form th:action="@{/employees/{id}/update(id=${employee.id})}" th:object="${employee}" method="post" class="employee-form" novalidate>
+            <input type="hidden" th:field="*{id}">
+            <div class="field-group full-width">
+                <label for="fullName">Full name <span class="required">*</span></label>
+                <input id="fullName" type="text" th:field="*{fullName}" autocomplete="name"
+                       th:classappend="${#fields.hasErrors('fullName')} ? 'input-error'">
+                <p class="field-error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></p>
+            </div>
+            <div class="field-group">
+                <label for="email">Email <span class="required">*</span></label>
+                <input id="email" type="email" th:field="*{email}" autocomplete="email"
+                       th:classappend="${#fields.hasErrors('email')} ? 'input-error'">
+                <p class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            </div>
+            <div class="field-group">
+                <label for="phone">Phone <span class="required">*</span></label>
+                <input id="phone" type="text" th:field="*{phone}" inputmode="numeric" maxlength="10"
+                       th:classappend="${#fields.hasErrors('phone')} ? 'input-error'">
+                <p class="field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+            </div>
+            <div class="field-group">
+                <label for="department">Department <span class="required">*</span></label>
+                <input id="department" type="text" th:field="*{department}"
+                       th:classappend="${#fields.hasErrors('department')} ? 'input-error'">
+                <p class="field-error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></p>
+            </div>
+            <div class="field-group">
+                <label for="salary">Monthly salary (LKR) <span class="required">*</span></label>
+                <input id="salary" type="number" th:field="*{salary}" min="0.01" step="0.01"
+                       th:classappend="${#fields.hasErrors('salary')} ? 'input-error'">
+                <p class="field-error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></p>
+            </div>
+            <div class="form-actions full-width">
+                <button class="button button-primary" type="submit">Update employee</button>
+                <a class="button button-secondary" th:href="@{/employees}">Cancel</a>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>
